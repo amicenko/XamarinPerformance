@@ -39,7 +39,7 @@ namespace Common
                 image.Mutate(ctx =>
                 {
                     ctx.Resize(width * 10, height * 10);
-                    ctx.Fill(Brushes.Solid(Color.White), new RectangleF(0, 60, box.Width, box.Height * 1.5f));
+                    ctx.Fill(Brushes.Solid(Color.White), new RectangleF(0, 60, box.Width * 1.2f, box.Height * 1.5f));
                     ctx.DrawText(text, font, Brushes.Solid(Color.DarkGoldenrod), new PointF(0, 60));
                 });
 
