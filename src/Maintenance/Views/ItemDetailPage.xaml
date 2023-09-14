@@ -24,7 +24,12 @@
 
                             <StackLayout BackgroundColor="LightPink">
                                 <Label Text="{Binding IsThumbnail}"/>
-                                <Image MinimumHeightRequest="150" MinimumWidthRequest="150" Source="{Binding ImageSource}" />
+                                <Image
+                                    MinimumHeightRequest="150"
+                                    MinimumWidthRequest="150"
+                                    HorizontalOptions="CenterAndExpand"
+                                    VerticalOptions="CenterAndExpand"
+                                    Source="{Binding ImageSource}" />
                             </StackLayout>
                         </StackLayout>
                     </ViewCell>

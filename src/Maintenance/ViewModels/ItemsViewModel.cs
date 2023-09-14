@@ -18,6 +18,7 @@ namespace Maintenance.ViewModels
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
         public Command ClearItemsCommand { get; }
+        public Command SnapshotHeapCommand { get; }
         public Command FillSmallCommand { get; }
         public Command FillMediumCommand { get; }
         public Command FillLargeCommand { get; }
@@ -33,6 +34,7 @@ namespace Maintenance.ViewModels
 
             AddItemCommand = new Command(OnAddItem);
             ClearItemsCommand = new Command(OnClearItems);
+            SnapshotHeapCommand = new Command(OnSnapshotHeap);
             FillSmallCommand = new Command(OnFillSmall);
             FillMediumCommand = new Command(OnFillMedium);
             FillLargeCommand = new Command(OnFillLarge);
@@ -86,11 +88,15 @@ namespace Maintenance.ViewModels
         {
             var items = await DataStore.GetItemsAsync(false);
             await Task.WhenAll(items.Select(item => DataStore.DeleteItemAsync(item.Id)));
+            Items.Clear();
+            OnSnapshotHeap(null);
+        }
 
+        private void OnSnapshotHeap(object obj)
+        {
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
             GC.WaitForPendingFinalizers();
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
-            GC.WaitForFullGCComplete();
         }
 
         private async void OnFillSmall(object obj)

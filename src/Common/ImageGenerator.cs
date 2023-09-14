@@ -25,7 +25,7 @@ namespace Common
             _segoeStream.Dispose();
         }
 
-        public static async Task<Stream> GenerateImage(int width = 64, int height = 48)
+        public static async Task<Stream> GenerateImage(int width = 128, int height = 96)
         {
             byte[] noise = new byte[width * height * 4];
             _random.NextBytes(noise);

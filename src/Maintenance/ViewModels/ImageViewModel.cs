@@ -1,5 +1,5 @@
-﻿using System.Runtime.Serialization;
-using System.Threading.Tasks;
+﻿using System.IO;
+using System.Runtime.Serialization;
 using Xamarin.Forms;
 using Image = Maintenance.Models.Image;
 
@@ -24,14 +24,14 @@ namespace Maintenance.ViewModels
                 for (int i = 0; i < 5; ++i)
                 {
                     // Simulate dodgy code that was setting properties one by one and triggering updates for each.
+                    SetProperty(ref imageModel, null);
                     SetProperty(ref imageModel, value);
                 }
             }
         }
 
-        [IgnoreDataMember]
         public ImageSource ImageSource =>
-            ImageSource.FromStream(ctx => Task.FromResult(Image?.Stream));
+            ImageSource.FromStream(() => new MemoryStream(Image?.Data));
 
         [IgnoreDataMember]
         public string Length => Image?.Data?.Length.ToString();

@@ -38,7 +38,7 @@ namespace Maintenance
         private void PollServer()
         {
             var dataStore = DependencyService.Get<MockDataStore>();
-            _repeater = Observable.Interval(TimeSpan.FromMinutes(2))
+            _repeater = Observable.Interval(TimeSpan.FromSeconds(5))
                 .Do(async tick =>
                 {
                     foreach (var cachedItem in await dataStore.GetItemsAsync(true))
