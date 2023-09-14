@@ -15,6 +15,7 @@
         <ToolbarItem Text="Large" Command="{Binding FillLargeCommand} "/>
         <ToolbarItem Text="Add" Command="{Binding AddItemCommand}" />
         <ToolbarItem Text="Clear" Command="{Binding ClearItemsCommand}" />
+        <ToolbarItem Text="Snapshot" Command="{Binding SnapshotHeapCommand}" />
     </ContentPage.ToolbarItems>
     <!--
       x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.

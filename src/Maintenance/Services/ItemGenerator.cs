@@ -32,7 +32,7 @@ namespace Maintenance.Services
                 {
                     Id = Guid.NewGuid(),
                     Text = i.ToString(),
-                    Description = "I'm a small item at index " + i,
+                    Description = "I'm an item at index " + i,
                     Images = new Image[count / 5].Select(x => new Image(ImageGenerator.GenerateImage().Result)).ToArray()
                 };
             }

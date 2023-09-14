@@ -29,7 +29,9 @@ namespace Maintenance.Models
         {
             get
             {
-                return _stream.ToArray();
+                var data = _stream.ToArray();
+                _stream.Position = 0;
+                return data;
             }
 
             set
