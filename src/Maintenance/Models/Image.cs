@@ -1,8 +1,5 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Runtime.Serialization;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Maintenance.Models
 {
@@ -43,9 +40,6 @@ namespace Maintenance.Models
         }
 
         [IgnoreDataMember]
-        public Func<CancellationToken, Task<Stream>> StreamGetter => (ct) => Task.FromResult((Stream)_stream);
-
-        [IgnoreDataMember]
-        public string Length => Data?.Length.ToString();
+        public Stream Stream => _stream;
     }
 }

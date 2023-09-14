@@ -3,7 +3,6 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewmodels="clr-namespace:Maintenance.ViewModels"
-    xmlns:views="clr-namespace:Maintenance.Views"
     x:Class="Maintenance.Views.ItemDetailPage"
     x:DataType="viewmodels:ItemDetailViewModel"
     Title="{Binding Title}">
@@ -16,20 +15,16 @@
 
         <Label Text="{Binding Images.Count}" />
 
-        <ListView ItemsSource="{Binding Images}" SelectionMode="None" BackgroundColor="Orange">
+        <ListView ItemsSource="{Binding Images}" SelectionMode="None" BackgroundColor="LightSalmon">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodels:ImageViewModel">
                     <ViewCell Height="150">
-                        <StackLayout Orientation="Vertical" Background="Red">
-                            <Label Text="{Binding Image.Length}" />
+                        <StackLayout Orientation="Vertical" BackgroundColor="LightGray">
+                            <Label Text="{Binding Length}" />
 
-                            <StackLayout Background="Green">
+                            <StackLayout BackgroundColor="LightPink">
                                 <Label Text="{Binding IsThumbnail}"/>
-                                <Image MinimumHeightRequest="150" MinimumWidthRequest="150">
-                                    <Image.Source>
-                                        <StreamImageSource Stream="{Binding Image.StreamGetter}" />
-                                    </Image.Source>
-                                </Image>
+                                <Image MinimumHeightRequest="150" MinimumWidthRequest="150" Source="{Binding ImageSource}" />
                             </StackLayout>
                         </StackLayout>
                     </ViewCell>
