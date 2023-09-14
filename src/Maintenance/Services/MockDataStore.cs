@@ -1,60 +1,60 @@
-﻿using Maintenance.Models;
+﻿using Akavache;
+using Maintenance.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 
 namespace Maintenance.Services
 {
     public class MockDataStore : IDataStore<Item>
     {
-        readonly List<Item> items;
+        //private static readonly string CachePath = Path.Combine(
+        //    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+        //    "GsmCwarl",
+        //    "Maintenance",
+        //    "cache.bin");
+
+        private readonly ISecureBlobCache _cache = BlobCache.Secure;
 
         public MockDataStore()
         {
-            items = new List<Item>()
-            {
-                new Item { Id = Guid.NewGuid().ToString(), Text = "First item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Second item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Third item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Fourth item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Fifth item", Description="This is an item description." },
-                new Item { Id = Guid.NewGuid().ToString(), Text = "Sixth item", Description="This is an item description." }
-            };
         }
 
         public async Task<bool> AddItemAsync(Item item)
         {
-            items.Add(item);
-
-            return await Task.FromResult(true);
+            await _cache.InsertObject(item.Id.ToString(), item);
+            return true;
         }
 
         public async Task<bool> UpdateItemAsync(Item item)
         {
-            var oldItem = items.Where((Item arg) => arg.Id == item.Id).FirstOrDefault();
-            items.Remove(oldItem);
-            items.Add(item);
+            // Don't do this!
+            // var oldItem = items.Where((Item arg) => arg.Id == item.Id).FirstOrDefault();
 
-            return await Task.FromResult(true);
+            // Do this
+            await _cache.Invalidate(item.Id.ToString());
+            await _cache.InsertObject(item.Id.ToString(), item);
+
+            return true;
         }
 
-        public async Task<bool> DeleteItemAsync(string id)
+        public async Task<bool> DeleteItemAsync(Guid id)
         {
-            var oldItem = items.Where((Item arg) => arg.Id == id).FirstOrDefault();
-            items.Remove(oldItem);
-
-            return await Task.FromResult(true);
+            await _cache.Invalidate(id.ToString());
+            return true;
         }
 
-        public async Task<Item> GetItemAsync(string id)
+        public async Task<Item> GetItemAsync(Guid id)
         {
-            return await Task.FromResult(items.FirstOrDefault(s => s.Id == id));
+            var item = await _cache.GetObject<Item>(id.ToString());
+            return item;
         }
 
         public async Task<IEnumerable<Item>> GetItemsAsync(bool forceRefresh = false)
         {
-            return await Task.FromResult(items);
+            var items = await _cache.GetAllObjects<Item>();
+            return items;
         }
     }
 }

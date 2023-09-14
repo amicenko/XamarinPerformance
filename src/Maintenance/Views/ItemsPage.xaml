@@ -4,7 +4,8 @@
              x:Class="Maintenance.Views.ItemsPage"
              Title="{Binding Title}"
              xmlns:local="clr-namespace:Maintenance.ViewModels"  
-             xmlns:model="clr-namespace:Maintenance.Models"  
+             xmlns:model="clr-namespace:Maintenance.Models"
+             x:DataType="local:ItemsViewModel"
              x:Name="BrowseItemsPage">
 
     <ContentPage.ToolbarItems>

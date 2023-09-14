@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maintenance", "Maintenance\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maintenance.Android", "Maintenance.Android\Maintenance.Android.csproj", "{1408C3B5-D096-4191-AC87-70EEAE78BB2F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DummyServer", "DummyServer\DummyServer.csproj", "{7EA4DF15-DA4A-497A-AAB0-25E642F77B10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{241C28F4-8877-4AFF-A473-24D92CFAE092}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +27,14 @@ Global
 		{1408C3B5-D096-4191-AC87-70EEAE78BB2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1408C3B5-D096-4191-AC87-70EEAE78BB2F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1408C3B5-D096-4191-AC87-70EEAE78BB2F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{7EA4DF15-DA4A-497A-AAB0-25E642F77B10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EA4DF15-DA4A-497A-AAB0-25E642F77B10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EA4DF15-DA4A-497A-AAB0-25E642F77B10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EA4DF15-DA4A-497A-AAB0-25E642F77B10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{241C28F4-8877-4AFF-A473-24D92CFAE092}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{241C28F4-8877-4AFF-A473-24D92CFAE092}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{241C28F4-8877-4AFF-A473-24D92CFAE092}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{241C28F4-8877-4AFF-A473-24D92CFAE092}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

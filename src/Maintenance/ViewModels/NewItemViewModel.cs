@@ -1,8 +1,6 @@
-﻿using Maintenance.Models;
+﻿using Common;
+using Maintenance.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Maintenance.ViewModels
@@ -22,8 +20,8 @@ namespace Maintenance.ViewModels
 
         private bool ValidateSave()
         {
-            return !String.IsNullOrWhiteSpace(text)
-                && !String.IsNullOrWhiteSpace(description);
+            return !string.IsNullOrWhiteSpace(text)
+                && !string.IsNullOrWhiteSpace(description);
         }
 
         public string Text
@@ -51,9 +49,10 @@ namespace Maintenance.ViewModels
         {
             Item newItem = new Item()
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = Guid.NewGuid(),
                 Text = Text,
-                Description = Description
+                Description = Description,
+                Images = new[] { new Models.Image(await ImageGenerator.GenerateImage(150, 150)) }
             };
 
             await DataStore.AddItemAsync(newItem);

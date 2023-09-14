@@ -1,24 +1,28 @@
-﻿using Maintenance.Services;
-using Maintenance.Views;
+﻿using Maintenance.Client;
+using Maintenance.Services;
 using System;
+using System.Reactive.Linq;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace Maintenance
 {
     public partial class App : Application
     {
+        private IDisposable _repeater;
+        private DummyClient _client;
 
         public App()
         {
             InitializeComponent();
 
+            Akavache.Registrations.Start("com.gsmcwarl.Maintenance");
             DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
         }
 
         protected override void OnStart()
         {
+            PollServer();
         }
 
         protected override void OnSleep()
@@ -27,6 +31,17 @@ namespace Maintenance
 
         protected override void OnResume()
         {
+            PollServer();
+        }
+
+        private void PollServer()
+        {
+            _repeater = Observable.Interval(TimeSpan.FromMinutes(1))
+                .Do(tick =>
+                {
+
+                })
+                .Subscribe();
         }
     }
 }

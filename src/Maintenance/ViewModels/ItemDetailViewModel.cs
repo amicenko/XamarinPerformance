@@ -1,7 +1,5 @@
-﻿using Maintenance.Models;
-using System;
+﻿using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Maintenance.ViewModels
@@ -12,7 +10,7 @@ namespace Maintenance.ViewModels
         private string itemId;
         private string text;
         private string description;
-        public string Id { get; set; }
+        private ImageViewModel[] images;
 
         public string Text
         {
@@ -28,23 +26,25 @@ namespace Maintenance.ViewModels
 
         public string ItemId
         {
-            get
-            {
-                return itemId;
-            }
+            get => itemId;
+
             set
             {
                 itemId = value;
-                LoadItemId(value);
+                LoadItemId(Guid.Parse(value));
             }
         }
 
-        public async void LoadItemId(string itemId)
+        public ImageViewModel[] Images
+        {
+            get => images;
+        }
+
+        public async void LoadItemId(Guid itemId)
         {
             try
             {
                 var item = await DataStore.GetItemAsync(itemId);
-                Id = item.Id;
                 Text = item.Text;
                 Description = item.Description;
             }
