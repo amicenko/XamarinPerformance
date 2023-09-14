@@ -1,4 +1,5 @@
-﻿using Maintenance.Client;
+﻿using Akavache;
+using Maintenance.Client;
 using Maintenance.Services;
 using System;
 using System.Reactive.Linq;
@@ -14,8 +15,8 @@ namespace Maintenance
         public App()
         {
             InitializeComponent();
-
-            Akavache.Registrations.Start("com.gsmcwarl.Maintenance");
+            Registrations.Start("com.gsmcwarl.Maintenance");
+            BlobCache.EnsureInitialized();
             DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
         }

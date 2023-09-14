@@ -1,5 +1,4 @@
 ﻿using Maintenance.Models;
-using System;
 
 namespace Maintenance.ViewModels
 {
@@ -14,9 +13,6 @@ namespace Maintenance.ViewModels
             set => SetProperty(ref isThumbnail, value);
         }
 
-        public int Width => isThumbnail ? Math.Min(150, Image.Width) : Math.Max(150, Image.Width);
-        public int Height => isThumbnail ? Math.Min(150, Image.Height) : Math.Max(150, Image.Height);
-
         public Image Image
         {
             get => imageModel;
@@ -28,12 +24,6 @@ namespace Maintenance.ViewModels
                     SetProperty(ref imageModel, value);
                 }
             }
-        }
-
-        public byte[] Data
-        {
-            get => imageModel?.Data;
-            set => imageModel.Data = value;
         }
     }
 }

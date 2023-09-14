@@ -1,6 +1,7 @@
 ﻿using Common;
 using Maintenance.Models;
 using System;
+using System.Linq;
 using Image = Maintenance.Models.Image;
 
 namespace Maintenance.Services
@@ -10,6 +11,16 @@ namespace Maintenance.Services
         public static Item[] GetSmallCache()
         {
             return GetCacheWithCount(15);
+        }
+
+        public static Item[] GetMediumCache()
+        {
+            return GetCacheWithCount(45);
+        }
+
+        public static Item[] GetLargeCache()
+        {
+            return GetCacheWithCount(100);
         }
 
         public static Item[] GetCacheWithCount(int count)
@@ -22,7 +33,7 @@ namespace Maintenance.Services
                     Id = Guid.NewGuid(),
                     Text = i.ToString(),
                     Description = "I'm a small item at index " + i,
-                    Images = new Image[] { new Image(ImageGenerator.GenerateImage().Result), new Image(ImageGenerator.GenerateImage().Result) }
+                    Images = new Image[count / 5].Select(x => new Image(ImageGenerator.GenerateImage().Result)).ToArray()
                 };
             }
 

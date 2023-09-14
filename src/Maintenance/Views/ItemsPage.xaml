@@ -1,14 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Maintenance.Views.ItemsPage"
-             Title="{Binding Title}"
-             xmlns:local="clr-namespace:Maintenance.ViewModels"  
-             xmlns:model="clr-namespace:Maintenance.Models"
-             x:DataType="local:ItemsViewModel"
-             x:Name="BrowseItemsPage">
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Maintenance.Views.ItemsPage"
+    Title="{Binding Title}"
+    xmlns:local="clr-namespace:Maintenance.ViewModels"  
+    xmlns:model="clr-namespace:Maintenance.Models"
+    x:DataType="local:ItemsViewModel"
+    x:Name="BrowseItemsPage">
 
     <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Small" Command="{Binding FillSmallCommand}" />
+        <ToolbarItem Text="Medium" Command="{Binding FillMediumCommand}" />
+        <ToolbarItem Text="Large" Command="{Binding FillLargeCommand} "/>
         <ToolbarItem Text="Add" Command="{Binding AddItemCommand}" />
     </ContentPage.ToolbarItems>
     <!--

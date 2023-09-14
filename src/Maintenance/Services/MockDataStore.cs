@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace Maintenance.Services
 {
@@ -15,7 +16,13 @@ namespace Maintenance.Services
         //    "Maintenance",
         //    "cache.bin");
 
-        private readonly ISecureBlobCache _cache = BlobCache.Secure;
+        //private static readonly string UwpPath = Path.Combine(
+        //    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+        //    "GsmCwarl",
+        //    "Maintenance",
+        //    "cache.bin");
+
+        private readonly IBlobCache _cache = Device.RuntimePlatform == Device.UWP ? BlobCache.InMemory : BlobCache.Secure;
 
         public MockDataStore()
         {

@@ -16,10 +16,4 @@
   <ItemGroup>
     <ProjectReference Include="..\DummyServer\DummyServer.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Views\ImageView.xaml.cs">
-      <DependentUpon>ImageView.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
 </Project>

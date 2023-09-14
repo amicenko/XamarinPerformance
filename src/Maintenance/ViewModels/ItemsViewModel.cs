@@ -1,4 +1,5 @@
 ﻿using Maintenance.Models;
+using Maintenance.Services;
 using Maintenance.Views;
 using System;
 using System.Collections.ObjectModel;
@@ -15,6 +16,9 @@ namespace Maintenance.ViewModels
         public ObservableCollection<Item> Items { get; }
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
+        public Command FillSmallCommand { get; }
+        public Command FillMediumCommand { get; }
+        public Command FillLargeCommand { get; }
         public Command<Item> ItemTapped { get; }
 
         public ItemsViewModel()
@@ -26,6 +30,9 @@ namespace Maintenance.ViewModels
             ItemTapped = new Command<Item>(OnItemSelected);
 
             AddItemCommand = new Command(OnAddItem);
+            FillSmallCommand = new Command(OnFillSmall);
+            FillMediumCommand = new Command(OnFillMedium);
+            FillLargeCommand = new Command(OnFillLarge);
         }
 
         async Task ExecuteLoadItemsCommand()
@@ -70,6 +77,30 @@ namespace Maintenance.ViewModels
         private async void OnAddItem(object obj)
         {
             await Shell.Current.GoToAsync(nameof(NewItemPage));
+        }
+
+        private async void OnFillSmall(object obj)
+        {
+            foreach (var item in ItemGenerator.GetSmallCache())
+            {
+                await DataStore.AddItemAsync(item);
+            }
+        }
+
+        private async void OnFillMedium(object obj)
+        {
+            foreach (var item in ItemGenerator.GetMediumCache())
+            {
+                await DataStore.AddItemAsync(item);
+            }
+        }
+
+        private async void OnFillLarge(object obj)
+        {
+            foreach (var item in ItemGenerator.GetLargeCache())
+            {
+                await DataStore.AddItemAsync(item);
+            }
         }
 
         async void OnItemSelected(Item item)

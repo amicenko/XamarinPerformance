@@ -25,7 +25,7 @@ namespace Common
             _segoeStream.Dispose();
         }
 
-        public static async Task<Stream> GenerateImage(int width = 2500, int height = 1800)
+        public static async Task<Stream> GenerateImage(int width = 1000, int height = 800)
         {
             byte[] noise = new byte[width * height * 4];
             _random.NextBytes(noise);
@@ -38,7 +38,7 @@ namespace Common
                 var box = TextMeasurer.MeasureBounds(text, new TextOptions(font));
                 image.Mutate(ctx =>
                 {
-                    ctx.Draw(Brushes.Solid(Color.White), 1f, new RectangleF(0, 0, width, box.Height));
+                    ctx.Fill(Brushes.Solid(Color.White), new RectangleF(0, 60, box.Width, box.Height * 1.5f));
                     ctx.DrawText(text, font, Brushes.Solid(Color.DarkGoldenrod), new PointF(0, 60));
                 });
 

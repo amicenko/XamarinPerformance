@@ -1,4 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Maintenance.Models
 {
@@ -24,10 +28,6 @@ namespace Maintenance.Models
 
         public string Name { get; set; }
 
-        public int Width { get; set; }
-
-        public int Height { get; set; }
-
         public byte[] Data
         {
             get
@@ -41,5 +41,11 @@ namespace Maintenance.Models
                 _stream = new MemoryStream(value);
             }
         }
+
+        [IgnoreDataMember]
+        public Func<CancellationToken, Task<Stream>> StreamGetter => (ct) => Task.FromResult((Stream)_stream);
+
+        [IgnoreDataMember]
+        public string Length => Data?.Length.ToString();
     }
 }

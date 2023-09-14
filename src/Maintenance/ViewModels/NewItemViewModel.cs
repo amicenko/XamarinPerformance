@@ -52,7 +52,11 @@ namespace Maintenance.ViewModels
                 Id = Guid.NewGuid(),
                 Text = Text,
                 Description = Description,
-                Images = new[] { new Models.Image(await ImageGenerator.GenerateImage(150, 150)) }
+                Images = new[]
+                {
+                    new Models.Image(await ImageGenerator.GenerateImage(150, 150)) { Name = "A" },
+                    new Models.Image(await ImageGenerator.GenerateImage(150, 150)) { Name = "B" }
+                }
             };
 
             await DataStore.AddItemAsync(newItem);

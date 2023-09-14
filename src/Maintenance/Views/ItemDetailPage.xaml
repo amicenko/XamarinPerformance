@@ -1,9 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:Maintenance.ViewModels"
-             x:Class="Maintenance.Views.ItemDetailPage"
-             x:DataType="viewmodels:ItemDetailViewModel"
-             Title="{Binding Title}">
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:Maintenance.ViewModels"
+    xmlns:views="clr-namespace:Maintenance.Views"
+    x:Class="Maintenance.Views.ItemDetailPage"
+    x:DataType="viewmodels:ItemDetailViewModel"
+    Title="{Binding Title}">
 
     <StackLayout Spacing="20" Padding="15">
         <Label Text="Text:" FontSize="Medium" />
@@ -11,12 +14,28 @@
         <Label Text="Description:" FontSize="Medium" />
         <Label Text="{Binding Description}" FontSize="Small"/>
 
-        <StructuredItemsView ItemsSource="{Binding Images}">
-            <StructuredItemsView.ItemsLayout>
-                <LinearItemsLayout Orientation="Horizontal">
-                </LinearItemsLayout>
-            </StructuredItemsView.ItemsLayout>
-        </StructuredItemsView>
+        <Label Text="{Binding Images.Count}" />
+
+        <ListView ItemsSource="{Binding Images}" SelectionMode="None" BackgroundColor="Orange">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="viewmodels:ImageViewModel">
+                    <ViewCell Height="150">
+                        <StackLayout Orientation="Vertical" Background="Red">
+                            <Label Text="{Binding Image.Length}" />
+
+                            <StackLayout Background="Green">
+                                <Label Text="{Binding IsThumbnail}"/>
+                                <Image MinimumHeightRequest="150" MinimumWidthRequest="150">
+                                    <Image.Source>
+                                        <StreamImageSource Stream="{Binding Image.StreamGetter}" />
+                                    </Image.Source>
+                                </Image>
+                            </StackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </StackLayout>
 
 
