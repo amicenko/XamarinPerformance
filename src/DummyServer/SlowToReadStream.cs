@@ -45,7 +45,7 @@ namespace DummyServer
             var totalBytes = 0;
             while (totalBytes < count)
             {
-                Thread.Sleep(1);
+                Thread.Sleep(1 * _numConcurrent);
                 var numBytesToRead = Math.Min(250, count - totalBytes);
                 var bytesRead = base.Read(buffer, totalBytes + offset, numBytesToRead);
                 if (bytesRead == 0)

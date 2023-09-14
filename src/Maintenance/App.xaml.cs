@@ -2,7 +2,10 @@
 using Maintenance.Client;
 using Maintenance.Services;
 using System;
+using System.IO;
+using System.Linq;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Maintenance
@@ -38,19 +41,25 @@ namespace Maintenance
         private void PollServer()
         {
             var dataStore = DependencyService.Get<MockDataStore>();
-            _repeater = Observable.Interval(TimeSpan.FromSeconds(5))
+            _repeater = Observable.Interval(TimeSpan.FromMinutes(1))
                 .Do(async tick =>
                 {
-                    foreach (var cachedItem in await dataStore.GetItemsAsync(true))
+                    var items = await dataStore.GetItemsAsync(true);
+                    await Task.WhenAll(items.Select(async item =>
                     {
-                        for (var i = 0; i < cachedItem.Images.Length; ++i)
-                        {
-                            var newImage = await DummyClient.GetImageStream();
-                            cachedItem.Images[i] = new Models.Image(newImage) { Name = "Downloaded " + i };
-                            await dataStore.UpdateItemAsync(cachedItem);
-                        }
+                        var updatedImages = item.Images.Select(image => DummyClient.GetImageStream());
+                        await Task.WhenAll(updatedImages);
 
-                    }
+                        for (int i = 0; i < updatedImages.Count(); i++)
+                        {
+                            var downloadStream = updatedImages.ElementAt(i).Result;
+                            using (var ms = new MemoryStream())
+                            {
+                                await downloadStream.CopyToAsync(ms);
+                                item.Images[i].Data = ms.ToArray();
+                            }
+                        }
+                    }));
                 })
                 .Subscribe();
         }

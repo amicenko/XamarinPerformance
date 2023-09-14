@@ -31,7 +31,18 @@ namespace Maintenance.ViewModels
         }
 
         public ImageSource ImageSource =>
-            ImageSource.FromStream(() => new MemoryStream(Image?.Data));
+            ImageSource.FromStream(() =>
+            {
+                try
+                {
+                    var test = SixLabors.ImageSharp.Image.Load(Image?.Data);
+                }
+                catch
+                {
+                }
+
+                return new MemoryStream(Image?.Data);
+            });
 
         [IgnoreDataMember]
         public string Length => Image?.Data?.Length.ToString();
