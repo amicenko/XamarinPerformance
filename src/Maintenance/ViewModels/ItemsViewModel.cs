@@ -84,6 +84,7 @@ namespace Maintenance.ViewModels
             foreach (var item in ItemGenerator.GetSmallCache())
             {
                 await DataStore.AddItemAsync(item);
+                Items.Add(item);
             }
         }
 
@@ -92,6 +93,7 @@ namespace Maintenance.ViewModels
             foreach (var item in ItemGenerator.GetMediumCache())
             {
                 await DataStore.AddItemAsync(item);
+                Items.Add(item);
             }
         }
 
@@ -100,6 +102,7 @@ namespace Maintenance.ViewModels
             foreach (var item in ItemGenerator.GetLargeCache())
             {
                 await DataStore.AddItemAsync(item);
+                Items.Add(item);
             }
         }
 
