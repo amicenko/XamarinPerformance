@@ -4,6 +4,7 @@ using Maintenance.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -16,6 +17,7 @@ namespace Maintenance.ViewModels
         public ObservableCollection<Item> Items { get; }
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
+        public Command ClearItemsCommand { get; }
         public Command FillSmallCommand { get; }
         public Command FillMediumCommand { get; }
         public Command FillLargeCommand { get; }
@@ -30,6 +32,7 @@ namespace Maintenance.ViewModels
             ItemTapped = new Command<Item>(OnItemSelected);
 
             AddItemCommand = new Command(OnAddItem);
+            ClearItemsCommand = new Command(OnClearItems);
             FillSmallCommand = new Command(OnFillSmall);
             FillMediumCommand = new Command(OnFillMedium);
             FillLargeCommand = new Command(OnFillLarge);
@@ -77,6 +80,17 @@ namespace Maintenance.ViewModels
         private async void OnAddItem(object obj)
         {
             await Shell.Current.GoToAsync(nameof(NewItemPage));
+        }
+
+        private async void OnClearItems(object obj)
+        {
+            var items = await DataStore.GetItemsAsync(false);
+            await Task.WhenAll(items.Select(item => DataStore.DeleteItemAsync(item.Id)));
+
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
+            GC.WaitForPendingFinalizers();
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
+            GC.WaitForFullGCComplete();
         }
 
         private async void OnFillSmall(object obj)
