@@ -10,17 +10,17 @@ namespace Maintenance.Services
     {
         public static Item[] GetSmallCache()
         {
-            return GetCacheWithCount(15);
+            return GetCacheWithCount(5);
         }
 
         public static Item[] GetMediumCache()
         {
-            return GetCacheWithCount(45);
+            return GetCacheWithCount(15);
         }
 
         public static Item[] GetLargeCache()
         {
-            return GetCacheWithCount(100);
+            return GetCacheWithCount(45);
         }
 
         public static Item[] GetCacheWithCount(int count)

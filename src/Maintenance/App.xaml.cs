@@ -37,10 +37,20 @@ namespace Maintenance
 
         private void PollServer()
         {
-            _repeater = Observable.Interval(TimeSpan.FromMinutes(1))
-                .Do(tick =>
+            var dataStore = DependencyService.Get<MockDataStore>();
+            _repeater = Observable.Interval(TimeSpan.FromMinutes(2))
+                .Do(async tick =>
                 {
+                    foreach (var cachedItem in await dataStore.GetItemsAsync(true))
+                    {
+                        for (var i = 0; i < cachedItem.Images.Length; ++i)
+                        {
+                            var newImage = await DummyClient.GetImageStream();
+                            cachedItem.Images[i] = new Models.Image(newImage) { Name = "Downloaded " + i };
+                            await dataStore.UpdateItemAsync(cachedItem);
+                        }
 
+                    }
                 })
                 .Subscribe();
         }
